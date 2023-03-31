@@ -1,0 +1,76 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name":"vnetTemplate",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/HITESH-VAGHELA/VM-Vnet-Linked/master/vnet.json"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "publicIpTemplate",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/HITESH-VAGHELA/VM-Vnet-Linked/master/publicIp.json"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "networkInterafaceTemplate",
+            "dependsOn": [
+               "[resourceId('Microsoft.Resources/deployments', 'vnetTemplate')]",
+               "[resourceId('Microsoft.Resources/deployments', 'publicIpTemplate')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/HITESH-VAGHELA/VM-Vnet-Linked/master/nic.json"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "vmTemplate",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'vnetTemplate')]",
+                "[resourceId('Microsoft.Resources/deployments', 'publicIpTemplate')]",
+                "[resourceId('Microsoft.Resources/deployments', 'networkInterafaceTemplate')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/HITESH-VAGHELA/VM-Vnet-Linked/master/vm.json"
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "subnetRef": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Resources/deployments','vnetTemplate')).outputs.subnetRef.value]"
+        },
+        "publicIpAddress": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Resources/deployments','publicIpTemplate')).outputs.publicIPAddress.value]"
+        },
+        "nicId": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'networkInterafaceTemplate')).outputs.nicId.value]"
+        }
+    }
+}

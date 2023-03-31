@@ -1,0 +1,43 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string",
+            "defaultValue":"testVm"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-11-01",
+            "name": "[concat(parameters('vmName'), '-nic')]",
+            "location":"[resourceGroup().location]",
+            "dependsOn": [],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig",
+                        "properties":{
+                            "subnet": {
+                               "id":"[reference(resourceId(resourceGroup().name, 'Microsoft.Resources/deployments', 'vnetTemplate'), '2021-04-01').outputs.subnetRef.value]" 
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[reference(resourceId(resourceGroup().name, 'Microsoft.Resources/deployments', 'publicIpTemplate'), '2022-09-01').outputs.publicIpAddress.value]"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "nicId": {
+            "type": "string",
+            "value": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkInterfaces', concat(parameters('vmName'), '-nic'))]"
+        }
+    }
+}
