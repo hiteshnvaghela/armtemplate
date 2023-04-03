@@ -38,7 +38,7 @@ stages:
               csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/azure-pipelines/VM-Vnet/main.json'
               deploymentMode: 'Validation'
           - task: AzureResourceManagerTemplateDeployment@3
-            condition: eq('${{ parameters.action, create }}')
+            condition: if eq(parameters.action, 'create')
             #condition: ${{ if eq(parameters.action, create) }}
             inputs:
               deploymentScope: 'Resource Group'
