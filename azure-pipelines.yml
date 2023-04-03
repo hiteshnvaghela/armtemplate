@@ -27,6 +27,7 @@ stages:
         continueOnError: false
         steps:
           - task: AzureResourceManagerTemplateDeployment@3
+            displayName: 'Validation Task'
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'hitesh-devops'
@@ -40,6 +41,7 @@ stages:
 
           - ${{ if eq(parameters.action, 'create') }}:    
             - task: AzureResourceManagerTemplateDeployment@3
+              displayName: 'Create Task'
               inputs:
                 deploymentScope: 'Resource Group'
                 azureResourceManagerConnection: 'hitesh-devops'
@@ -53,6 +55,7 @@ stages:
 
           - ${{ if eq(parameters.action, 'delete') }}:      
             - task: AzureResourceManagerTemplateDeployment@3
+              displayName: 'Delete Task'
               inputs:
                 deploymentScope: 'Resource Group'
                 azureResourceManagerConnection: 'hitesh-devops'
