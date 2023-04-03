@@ -19,12 +19,26 @@ stages:
       - job: validate 
         continueOnError: false
         steps:
-          - task: AzureResourceGroupDeployment@2
+          - task: AzureResourceManagerTemplateDeployment@3
             inputs:
-              azureSubscription: 'hitesh-devops'
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'hitesh-devops'
+              subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
               action: 'Create Or Update Resource Group'
               resourceGroupName: 'devops'
               location: 'East US'
               templateLocation: 'URL of the file'
               csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/azure-pipelines/VM-Vnet/main.json'
               deploymentMode: 'Validation'
+          - task: AzureResourceManagerTemplateDeployment@3
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'hitesh-devops'
+              subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: 'devops'
+              location: 'East US'
+              templateLocation: 'URL of the file'
+              csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/azure-pipelines/VM-Vnet/main.json'
+              deploymentMode: 'Incremental'
+        
