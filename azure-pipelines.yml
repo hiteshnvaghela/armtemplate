@@ -23,7 +23,7 @@ parameters:
 stages:
   - stage: armValidate
     jobs:
-      - job: validate 
+      - job: ArmTemplateDeployment 
         continueOnError: false
         steps:
           - task: AzureResourceManagerTemplateDeployment@3
