@@ -13,6 +13,13 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+parameters:
+  - name: action
+    type: string
+    values:
+      - create
+      - delete
+
 stages:
   - stage: armValidate
     jobs:
@@ -31,6 +38,7 @@ stages:
               csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/azure-pipelines/VM-Vnet/main.json'
               deploymentMode: 'Validation'
           - task: AzureResourceManagerTemplateDeployment@3
+            condition: eq('${{ parameters.action }}', create)
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'hitesh-devops'
@@ -41,4 +49,16 @@ stages:
               templateLocation: 'URL of the file'
               csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/azure-pipelines/VM-Vnet/main.json'
               deploymentMode: 'Incremental'
+          - task: AzureResourceManagerTemplateDeployment@3
+            condition: eq('${{ parameters.action }}', delete)
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'hitesh-devops'
+              subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: 'devops'
+              location: 'East US'
+              templateLocation: 'URL of the file'
+              csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/master/VM-Vnet/removeall.json'
+              deploymentMode: 'Complete'
         
