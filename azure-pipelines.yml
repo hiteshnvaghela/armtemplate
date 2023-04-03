@@ -39,7 +39,7 @@ stages:
               deploymentMode: 'Validation'
           - task: AzureResourceManagerTemplateDeployment@3
             #condition: eq('${{ parameters.action }}', create
-            condition: ${{ if eq(parameters.action, 'create') }}
+            condition: ${{ if eq(parameters.action, create) }}
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'hitesh-devops'
@@ -52,7 +52,7 @@ stages:
               deploymentMode: 'Incremental'
           - task: AzureResourceManagerTemplateDeployment@3
             #condition: eq('${{ parameters.action }}', delete)
-            condition: ${{ if eq(parameters.action, 'delete' ) }}
+            condition: ${{ if eq(parameters.action, delete ) }}
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'hitesh-devops'
