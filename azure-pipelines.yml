@@ -20,6 +20,9 @@ parameters:
       - create
       - delete
 
+variables:
+- group: arm
+
 stages:
   - stage: armValidate
     jobs:
@@ -31,12 +34,13 @@ stages:
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'hitesh-devops'
-              subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
+              #subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
+              subscriptionId: '$(subscriptionId)'
               action: 'Create Or Update Resource Group'
-              resourceGroupName: 'devops'
-              location: 'East US'
+              resourceGroupName: '$(resourceGroupName)'
+              location: '$(location)'
               templateLocation: 'URL of the file'
-              csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/azure-pipelines/VM-Vnet/main.json'
+              csmFileLink: '$(mainLink)'
               deploymentMode: 'Validation'
             
           - ${{ if eq(parameters.action, 'create') }}:    
@@ -45,12 +49,12 @@ stages:
               inputs:
                 deploymentScope: 'Resource Group'
                 azureResourceManagerConnection: 'hitesh-devops'
-                subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
+                subscriptionId: '$(subscriptionId)'
                 action: 'Create Or Update Resource Group'
-                resourceGroupName: 'devops'
-                location: 'East US'
+                resourceGroupName: '$(resourceGroupName)'
+                location: '$(location)'
                 templateLocation: 'URL of the file'
-                csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/develop/VM-Vnet/main.json'
+                csmFileLink: '$(mainLink)'
                 deploymentMode: 'Incremental'
 
           - ${{ if eq(parameters.action, 'delete') }}:      
@@ -59,11 +63,11 @@ stages:
               inputs:
                 deploymentScope: 'Resource Group'
                 azureResourceManagerConnection: 'hitesh-devops'
-                subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
+                subscriptionId: '$(subscriptionId)'
                 action: 'Create Or Update Resource Group'
-                resourceGroupName: 'devops'
-                location: 'East US'
+                resourceGroupName: '$(resourceGroupName)'
+                location: '$(location)'
                 templateLocation: 'URL of the file'
-                csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/develop/VM-Vnet/removeall.json'
+                csmFileLink: '$(removeAllLink)'
                 deploymentMode: 'Complete'
         
