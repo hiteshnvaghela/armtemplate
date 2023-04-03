@@ -50,7 +50,7 @@ stages:
                 resourceGroupName: 'devops'
                 location: 'East US'
                 templateLocation: 'URL of the file'
-                csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/azure-pipelines/VM-Vnet/main.json'
+                csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/develop/VM-Vnet/main.json'
                 deploymentMode: 'Incremental'
 
           - ${{ if eq(parameters.action, 'delete') }}:      
@@ -64,6 +64,6 @@ stages:
                 resourceGroupName: 'devops'
                 location: 'East US'
                 templateLocation: 'URL of the file'
-                csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/master/VM-Vnet/removeall.json'
+                csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/develop/VM-Vnet/removeall.json'
                 deploymentMode: 'Complete'
         
