@@ -38,7 +38,7 @@ stages:
               templateLocation: 'URL of the file'
               csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/azure-pipelines/VM-Vnet/main.json'
               deploymentMode: 'Validation'
-
+            
           - ${{ if eq(parameters.action, 'create') }}:    
             - task: AzureResourceManagerTemplateDeployment@3
               displayName: 'Create Task'
