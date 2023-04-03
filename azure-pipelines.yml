@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- develop
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: armValidate
+    jobs:
+      - job: validate 
+        continueOnError: false
+        steps:
+          - task: AzureResourceGroupDeployment@2
+            inputs:
+              azureSubscription: 'hitesh-devops'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: 'devops'
+              location: 'East US'
+              templateLocation: 'Linked artifact'
+              csmFile: 'main.json'
+              deploymentMode: 'Validation'
