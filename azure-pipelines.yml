@@ -25,6 +25,6 @@ stages:
               action: 'Create Or Update Resource Group'
               resourceGroupName: 'devops'
               location: 'East US'
-              templateLocation: 'Linked artifact'
-              csmFile: 'main.json'
+             # templateLocation: 'URL of the file'
+              csmFileLink: 'https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/azure-pipelines/VM-Vnet/main.json'
               deploymentMode: 'Validation'
