@@ -12,7 +12,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/HITESH-VAGHELA/VM-Vnet-Linked/master/vnet.json"
+                    "uri": "https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/develop/VM-Vnet/vnet.json"
                 }
             }
         },
@@ -23,7 +23,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/HITESH-VAGHELA/VM-Vnet-Linked/master/publicIp.json"
+                    "uri": "https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/develop/VM-Vnet/publicIp.json"
                 }
             }
         },
@@ -38,7 +38,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/HITESH-VAGHELA/VM-Vnet-Linked/master/nic.json"
+                    "uri": "https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/develop/VM-Vnet/nic.json"
                 }
             }
         },
@@ -54,7 +54,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/HITESH-VAGHELA/VM-Vnet-Linked/master/vm.json"
+                    "uri": "https://raw.githubusercontent.com/hiteshnvaghela/armtemplate/develop/VM-Vnet/vm.json"
                 }
             }
         }
