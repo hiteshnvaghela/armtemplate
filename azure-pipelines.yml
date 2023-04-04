@@ -34,7 +34,6 @@ stages:
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'hitesh-devops'
-              #subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
               subscriptionId: '$(subscriptionId)'
               action: 'Create Or Update Resource Group'
               resourceGroupName: '$(resourceGroupName)'
