@@ -16,6 +16,9 @@ parameters:
       - create
       - delete
 
+variables:
+- group: armvargroup-keyvault
+
 stages:
   - stage: armValidate
     jobs:
@@ -27,7 +30,8 @@ stages:
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'hitesh-devops'
-              subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
+              subscriptionId: '$(subscriptionId)'
+              #subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
               action: 'Create Or Update Resource Group'
               resourceGroupName: 'devops'
               location: 'East US'
@@ -41,7 +45,7 @@ stages:
               inputs:
                 deploymentScope: 'Resource Group'
                 azureResourceManagerConnection: 'hitesh-devops'
-                subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
+                subscriptionId: '$(subscriptionId)'
                 action: 'Create Or Update Resource Group'
                 resourceGroupName: 'devops'
                 location: 'East US'
@@ -55,7 +59,7 @@ stages:
               inputs:
                 deploymentScope: 'Resource Group'
                 azureResourceManagerConnection: 'hitesh-devops'
-                subscriptionId: '8dcf5406-1ef3-45a7-a85d-67d3dde5d189'
+                subscriptionId: '$(subscriptionId)'
                 action: 'Create Or Update Resource Group'
                 resourceGroupName: 'devops'
                 location: 'East US'
