@@ -44,7 +44,7 @@ stages:
             
           - ${{ if eq(parameters.action, 'create') }}:    
             - task: AzureResourceManagerTemplateDeployment@3
-              displayName: 'Create Task'
+              displayName: 'Create Task' 
               inputs:
                 deploymentScope: 'Resource Group'
                 azureResourceManagerConnection: 'hitesh-devops'
