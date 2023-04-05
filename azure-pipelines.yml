@@ -1,0 +1,72 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- develop
+
+pool:
+  vmImage: ubuntu-latest
+
+parameters:
+  - name: action
+    type: string
+    values:
+      - create
+      - delete
+
+variables:
+- group: arm
+
+stages:
+  - stage: armValidate
+    jobs:
+      - job: ArmTemplateDeployment 
+        continueOnError: false
+        steps:
+          - task: AzureResourceManagerTemplateDeployment@3
+            displayName: 'Validation Task'
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'hitesh-devops'
+              subscriptionId: '$(subscriptionId)'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: '$(resourceGroupName)'
+              location: '$(location)'
+              templateLocation: 'URL of the file'
+              csmFileLink: '$(mainLink)'
+              deploymentMode: 'Validation'
+            
+          - ${{ if eq(parameters.action, 'create') }}:    
+            - task: AzureResourceManagerTemplateDeployment@3
+              displayName: 'Create Task' 
+              inputs:
+                deploymentScope: 'Resource Group'
+                azureResourceManagerConnection: 'hitesh-devops'
+                subscriptionId: '$(subscriptionId)'
+                action: 'Create Or Update Resource Group'
+                resourceGroupName: '$(resourceGroupName)'
+                location: '$(location)'
+                templateLocation: 'URL of the file'
+                csmFileLink: '$(mainLink)'
+                deploymentMode: 'Incremental'
+
+          - ${{ if eq(parameters.action, 'delete') }}:      
+            - task: AzureResourceManagerTemplateDeployment@3
+              displayName: 'Delete Task'
+              inputs:
+                deploymentScope: 'Resource Group'
+                azureResourceManagerConnection: 'hitesh-devops'
+                subscriptionId: '$(subscriptionId)'
+                action: 'Create Or Update Resource Group'
+                resourceGroupName: '$(resourceGroupName)'
+                location: '$(location)'
+                templateLocation: 'URL of the file'
+                csmFileLink: '$(removeAllLink)'
+                deploymentMode: 'Complete'
+        
